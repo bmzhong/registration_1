@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="726b8087-4725-4027-ac1e-550374fec652" name="202.117.21.94">
+        <fileTransfer rootFolder="/data/zhongbaoming/registration/registration_1" accessType="SFTP" host="202.117.21.94" port="22" sshConfigId="69c2a010-30ca-4a7b-b43d-c83d1b23f09e" sshConfig="zhongbaoming@202.117.21.94:22 password">
+          <advancedOptions>
+            <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
