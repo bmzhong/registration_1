@@ -252,3 +252,4 @@ def restore_raw_image_from_output(img_dict: Dict[str, torch.Tensor]) -> np.ndarr
         img *= 255
         img = img.astype(np.uint8)
     return img
+

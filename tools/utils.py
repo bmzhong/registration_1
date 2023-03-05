@@ -4,7 +4,8 @@ import numpy as np
 import random
 from tools.zoo.deformer_zoo import DeformerZoo
 from tools.zoo.metric_zoo import MetricZoo
-
+from tools.zoo.reader_zoo import restore_raw_image_from_output
+from tools.io import write_tiff_stack
 
 def set_random_seed(seed=0):
     SEED = seed
@@ -63,28 +64,14 @@ def average_loss(output):
     return output
 
 
-def get_deform_space(flow):
-    shape = flow.shape[2:]
-
-    vectors = [torch.arange(0, s) for s in shape]
-    grids = torch.meshgrid(vectors)
-    grid = torch.stack(grids)  # y, x, z
-    grid = torch.unsqueeze(grid, 0)  # add batch
-    grid = grid.type(torch.FloatTensor)
-    grid = grid.to(flow.device)
-
-    new_locs = grid + flow
-
-    for i in range(len(shape)):
-        new_locs[:, i, ...] = 2 * (new_locs[:, i, ...] / (shape[i] - 1) - 0.5)
-
-    if len(shape) == 2:
-        new_locs = new_locs.permute(0, 2, 3, 1)
-        new_locs = new_locs[..., [1, 0]]
-    elif len(shape) == 3:
-        new_locs = new_locs.permute(0, 2, 3, 4, 1)
-        new_locs = new_locs[..., [2, 1, 0]]
-    return new_locs
+def write_img(img_dict: dict, name: str, mode: str, basedir: str):
+    """
+    :param mode: fix mov reg
+    """
+    img = restore_raw_image_from_output(img_dict)
+    if not os.path.exists(os.path.join(basedir, name)):
+        os.mkdir(os.path.join(basedir, name))
+    write_tiff_stack(img, os.path.join(basedir, name, mode + ".tiff"))
 
 
 def fusion_loss(output: dict, loss_cfg, constrain_dict: dict):
@@ -108,7 +95,7 @@ def fusion_loss(output: dict, loss_cfg, constrain_dict: dict):
 
 
 def tensor_cuda(data, device):
-    dfs_cuda(data,device)
+    dfs_cuda(data, device)
     return data
 
 

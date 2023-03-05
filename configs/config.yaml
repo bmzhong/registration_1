@@ -6,14 +6,14 @@
 TrainConfig:
   mixed_precision_train: False       # if using the mix precision training
   start_new_model: True
-  max_save_num: 2                    # numbers that checkpoint files saved; default 10
+  max_save_num: 10                    # numbers that checkpoint files saved; default 10
   gpu: ''                            # appoint the gpu use in training
 #  data: "/media/root/01a3fb01-7912-492d-9561-d36a4da2ffef/zbm/data/dbe_transfer/data_4/"    #the data pth
 #  data: "G:\\biomdeical\\registration\\data\\soma_nuclei_seretonin_rev\\data_4"    #the data pth
-  data: "E:\\data\\biomedical\\registeration\\code\\data\\dbe_transfer\\data_4"    #the data pth
+  data: "E:\\data\\biomedical\\registeration\\code\\data\\dbe_transfer\\data_2"    #the data pth
   batch: 1
   seed: 0  # random seed, default is 0
-  epoch: 10
+  epoch: 100
   train_type: 0  # 0: single moving and fixed fix image, 1:random movimg, fiximg， 2:multiple registration using brain bank; default 0
 #  checkpoint: "/media/root/01a3fb01-7912-492d-9561-d36a4da2ffef/zht/data/MS-RegNet/ckp/DBE_transfer_data_4_mi/checkpoint/3099.pth"     #checkpoint path
   checkpoint: ''     #checkpoint path
@@ -54,9 +54,9 @@ ModelConfig:
     # such as bezier, voxelmorph
 
     # if you want to use the voxelmorph network
-    type: "voxelmorph"   # base network of the whole network，select from ["voxelmorph", "vitmorph"]
+    type: "xmorpher"   # base network of the whole network，select from ["voxelmorph", "vitmorph"]
     median_filter_ksize: 15    #median filter kernel size，need to be an odd number
-    max_delta: 0.01   # max offset of each voxel, range from 0 to 1; default 1
+    max_delta: 0.01   # max offset of each voxel, range from 0 to 1; default 0.01
 
     # if you want to use the bezier network.
     # the code is in ms_regnet/model/backbone/bezier.py

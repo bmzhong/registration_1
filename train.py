@@ -113,7 +113,15 @@ def train(config, basedir, config_path):
 
     model = RegistrationNet(constrain=config["ModelConfig"]["backbone"]["constrain"],
                             loss_config=config["LossConfig"]["loss"],
-                            n_channels=config["DataConfig"]["n_channels"])
+                            n_channels=config["DataConfig"]["n_channels"],
+                            scale=config["ModelConfig"]["scale"],
+                            median_filter_ksize=config["ModelConfig"]["backbone"]["median_filter_ksize"],
+                            max_delta=config["ModelConfig"]["backbone"]["max_delta"],
+                            no_loss=False,
+                            checkpoint=config["TrainConfig"]["checkpoint"])
+
+    total = sum([param.nelement() for param in model.parameters()])
+    print("Number of parameter: %.2fM" % (total / 1e6))
 
     use_gpu = True if len(config["TrainConfig"]["gpu"]) > 0 else False
     print(f'use_gpu: {use_gpu}')

@@ -11,3 +11,13 @@ def read_tiff_stack(path):
         images.append(slice)
 
     return np.array(images)
+
+
+def write_tiff_stack(vol, fname):
+    im = Image.fromarray(vol[0])
+    ims = []
+
+    for i in range(1, vol.shape[0]):
+        ims.append(Image.fromarray(vol[i]))
+
+    im.save(fname, save_all=True, append_images=ims)

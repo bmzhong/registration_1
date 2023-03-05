@@ -3,12 +3,13 @@ import torch.nn.functional as F
 import numpy as np
 import math
 
-def gradient_loss(flow, penalty='l2'):
+
+def compute_gradient_loss(flow, penalty='l2'):
     dy = torch.abs(flow[:, :, 1:, :, :] - flow[:, :, :-1, :, :])
     dx = torch.abs(flow[:, :, :, 1:, :] - flow[:, :, :, :-1, :])
     dz = torch.abs(flow[:, :, :, :, 1:] - flow[:, :, :, :, :-1])
 
-    if(penalty == 'l2'):
+    if (penalty == 'l2'):
         dy = dy * dy
         dx = dx * dx
         dz = dz * dz
@@ -43,6 +44,7 @@ def ncc_loss(I, J, win=None):
     cc = cross * cross / (I_var * J_var + 1e-5)
 
     return 1 - torch.mean(cc)
+
 
 def compute_local_sums(I, J, filt, stride, padding, win):
     I2 = I * I

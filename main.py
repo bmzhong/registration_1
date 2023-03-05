@@ -4,6 +4,7 @@ from shutil import rmtree
 from time import strftime, localtime
 import yaml
 from train import train
+from evaluate import evaluate
 
 
 def get_args():
@@ -53,6 +54,8 @@ def main():
     basedir = get_basedir(args.output, config["TrainConfig"]["start_new_model"])
     if args.train:
         train(config, basedir, args.config)
+    elif args.eval:
+        evaluate(config, basedir, args.checkpoint, args.config)
 
 
 if __name__ == "__main__":

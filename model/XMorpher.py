@@ -739,29 +739,10 @@ class XMorpherHead(nn.Module):
         self.swin = XMorpher(window_size=(2, 2, 2), in_chans=n_channels, embed_dim=48)
         self.out_conv = nn.Conv3d(24, 3, 3, padding=1)
 
-        # self.stn = SpatialTransformer()
-        # self.rstn = Re_SpatialTransformer()
-
-    def forward(self, moving, fixed, mov_label=None, fix_label=None):
+    def forward(self, moving, fixed):
         x = self.swin(fixed, moving)
-        flow = self.out_conv(x)
-        # m_to_f = self.stn(moving, flow)
-        return flow
-
-        # w_m_to_f = self.stn(moving, flow)
-        # w_f_to_m = self.rstn(fixed, flow)
-
-        # if mov_label is not None:
-        #     w_label_m_to_f = self.stn(mov_label, flow, mode='nearest')
-        # else:
-        #     w_label_m_to_f = None
-        #
-        # if fix_label is not None:
-        #     w_label_f_to_m = self.rstn(fix_label, flow, mode='nearest')
-        # else:
-        #     w_label_f_to_m = None
-        #
-        # return w_m_to_f, w_f_to_m, w_label_m_to_f, w_label_f_to_m, flow
+        x = self.out_conv(x)
+        return x
 
 
 if __name__ == '__main__':
